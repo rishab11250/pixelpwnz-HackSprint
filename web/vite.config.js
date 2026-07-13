@@ -9,3 +9,5 @@ export default defineConfig({
     tailwindcss(),
   ],
 })
+
+// force vite restart

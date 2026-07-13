@@ -292,4 +292,34 @@ router.get('/:sessionId/messages', optionalAuth, async (req, res, next) => {
   }
 });
 
+/**
+ * DELETE /api/sessions/:sessionId
+ * Delete a session and its associated data (messages, vectors).
+ */
+router.delete('/:sessionId', optionalAuth, async (req, res, next) => {
+  try {
+    const { sessionId } = req.params;
+
+    // Verify session exists
+    const session = await getSession(sessionId);
+    if (!session) {
+      return res.status(404).json({
+        success: false,
+        error: 'Session not found or expired',
+      });
+    }
+
+    // Call store's deleteSession
+    const { deleteSession } = await import('../store/sessionStore.js');
+    await deleteSession(sessionId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Session deleted successfully',
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

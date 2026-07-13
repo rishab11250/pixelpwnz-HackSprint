@@ -116,7 +116,7 @@ export const getSessionDetails = async (sessionId) => {
  * @param {string} sessionId
  */
 export const clearSession = async (sessionId) => {
-  await apiClient.delete(`/session/${sessionId}`);
+  await apiClient.delete(`/sessions/${sessionId}`);
 };
 
 /**
